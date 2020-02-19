@@ -1,8 +1,9 @@
 <ion-header>
   <ion-toolbar color="primary">
     <ion-title>
-      <ion-col text-center> Tout doux </ion-col>
-      <ion-col text-center>Your Registered EmailID : {{userEmail}} </ion-col>
+      <ion-col text-center> Welcome {{this.authService.userDetails().email}} !</ion-col>
+      <ion-col text-center> <ion-button (click)="logout()">Log out</ion-button> </ion-col>
+
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -26,6 +27,6 @@
   </ion-list>
   <section>
   <ion-button expand="block" [routerDirection]="'root'"
-  [routerLink]="'/addtodo'">Add a New Todo</ion-button>
+  [routerLink]="'/addtodo'">Add a New tout doux</ion-button>
   </section>
 </ion-content>

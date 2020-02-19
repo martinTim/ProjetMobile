@@ -3,6 +3,8 @@ import { Todo } from '../model/todo';
 import { TodoslistService } from '../services/todoslist.service';
 import { Observable } from 'rxjs';
 import { AuthGuardService } from '../services/auth-guard.service';
+import { AuthenticateService } from '../services/authentication.service';
+
 
 @Component({
   selector: 'app-todoslist',
@@ -16,17 +18,19 @@ export class TodoslistPage implements OnInit {
 
   constructor(
     private listService: TodoslistService,
-    private authService: AuthGuardService) {}
+    private guardService: AuthGuardService,
+    private authService: AuthenticateService){}
 
   ngOnInit(): void {
     this.todos$ = this.listService.get();
-    if(this.authService.userDetails()){
-     this.userEmail = this.authService.userDetails().email;
-   }
   }
 
   delete(todo: Todo){
     this.listService.delete(todo);
+  }
+
+  logout(){
+    this.authService.logoutUser();
   }
 
 }

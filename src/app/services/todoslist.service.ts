@@ -12,10 +12,10 @@ export class TodoslistService {
   private todosCollection: AngularFirestoreCollection<Todo>;
 
   private todos: Observable<Array<Todo>>;
-  
+
   constructor(private db: AngularFirestore) {
     this.todosCollection = db.collection<Todo>('todos');
- 
+
     this.todos = this.todosCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
@@ -27,6 +27,22 @@ export class TodoslistService {
     );
   }
   
+  /*constructor(private db: AngularFirestore, private authGuard: AuthGuardService) {
+    if (!this.dservice.isInDisconnectedMode) {
+      this.todosCollection = db.collection<TodoList>(authGuard.userDetails().email);
+      this.todosCollection$ = this.todosCollection.snapshotChanges().pipe(
+        map(actions => {
+          return actions.map(a => {
+            const data = a.payload.doc.data();
+            const id = a.payload.doc.id;
+            return { id, ...data };
+          });
+        })
+      );
+      this.todosCollection$.subscribe(todos => this.todos = todos);
+    }
+  }*/
+
   get(): Observable<Array<Todo>> {
     return this.todos;
   }

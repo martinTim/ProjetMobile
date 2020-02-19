@@ -1,15 +1,18 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import {AuthGuardService} from "./services/auth-guard.service";
 
 const routes: Routes = [
   { path: '', redirectTo: 'todoslist', pathMatch: 'full' },
   {
     path: 'todoslist',
-    loadChildren: () => import('./todoslist/todoslist.module').then( m => m.TodoslistPageModule)
+    loadChildren: () => import('./todoslist/todoslist.module').then( m => m.TodoslistPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'addtodo',
-    loadChildren: () => import('./addtodo/addtodo.module').then( m => m.AddtodoPageModule)
+    loadChildren: () => import('./addtodo/addtodo.module').then( m => m.AddtodoPageModule),
+    canActivate: [AuthGuardService],
   },
   {
     path: 'login',
