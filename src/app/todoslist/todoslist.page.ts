@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Todo } from '../model/todo';
+import { TodoUser } from '../model/todoUser';
 import { TodoslistService } from '../services/todoslist.service';
 import { Observable } from 'rxjs';
 import { AuthGuardService } from '../services/auth-guard.service';
@@ -25,8 +26,8 @@ export class TodoslistPage implements OnInit {
     this.todos$ = this.listService.get();
   }
 
-  delete(todo: Todo){
-    this.listService.delete(todo);
+  delete(todoUser: TodoUser){
+    this.listService.delete(todoUser);
   }
 
   logout(){

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Todo } from '../model/todo';
+import { TodoUser } from '../model/todoUser';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -9,14 +10,14 @@ import { map } from 'rxjs/operators';
 })
 export class TodoslistService {
 
-  private todosCollection: AngularFirestoreCollection<Todo>;
+  private todoUserCollection: AngularFirestoreCollection<TodoUser>;
 
-  private todos: Observable<Array<Todo>>;
+  private todoUser: Observable<Array<TodoUser>>;
 
   constructor(private db: AngularFirestore) {
-    this.todosCollection = db.collection<Todo>('todos');
+    this.todoUserCollection = db.collection<TodoUser>('todoUser');
 
-    this.todos = this.todosCollection.snapshotChanges().pipe(
+    this.todoUser = this.todoUserCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
@@ -26,7 +27,7 @@ export class TodoslistService {
       })
     );
   }
-  
+
   /*constructor(private db: AngularFirestore, private authGuard: AuthGuardService) {
     if (!this.dservice.isInDisconnectedMode) {
       this.todosCollection = db.collection<TodoList>(authGuard.userDetails().email);
@@ -43,16 +44,16 @@ export class TodoslistService {
     }
   }*/
 
-  get(): Observable<Array<Todo>> {
-    return this.todos;
+  get(): Observable<Array<TodoUser>> {
+    return this.todoUser;
   }
 
-  add(todo: Todo) {
-    return this.todosCollection.add(todo);
+  add(todoUser: TodoUser) {
+    return this.todoUserCollection.add(todoUser);
   }
 
-  delete(todo: Todo){
-    return this.todosCollection.doc(todo.id).delete();
+  delete(todoUser: TodoUser){
+    return this.todoUserCollection.doc(todoUser.id).delete();
   }
 
 }
