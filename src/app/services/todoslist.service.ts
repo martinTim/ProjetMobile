@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Todo } from '../model/todo';
-import { TodoUser } from '../model/todoUser';
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -10,14 +9,14 @@ import { map } from 'rxjs/operators';
 })
 export class TodoslistService {
 
-  private todoUserCollection: AngularFirestoreCollection<TodoUser>;
+  private todoCollection: AngularFirestoreCollection<Todo>;
 
-  private todoUser: Observable<Array<TodoUser>>;
+  private todo: Observable<Array<Todo>>;
 
   constructor(private db: AngularFirestore) {
-    this.todoUserCollection = db.collection<TodoUser>('todoUser');
+    this.todoCollection = db.collection<Todo>('todo');
 
-    this.todoUser = this.todoUserCollection.snapshotChanges().pipe(
+    this.todo = this.todoCollection.snapshotChanges().pipe(
       map(actions => {
         return actions.map(a => {
           const data = a.payload.doc.data();
@@ -28,32 +27,25 @@ export class TodoslistService {
     );
   }
 
-  /*constructor(private db: AngularFirestore, private authGuard: AuthGuardService) {
-    if (!this.dservice.isInDisconnectedMode) {
-      this.todosCollection = db.collection<TodoList>(authGuard.userDetails().email);
-      this.todosCollection$ = this.todosCollection.snapshotChanges().pipe(
-        map(actions => {
-          return actions.map(a => {
-            const data = a.payload.doc.data();
-            const id = a.payload.doc.id;
-            return { id, ...data };
-          });
-        })
-      );
-      this.todosCollection$.subscribe(todos => this.todos = todos);
-    }
-  }*/
+  get(id: String): Array<Todo> {
+    var tmp = new Array<Todo>();
+    console.log("id : "+id);
+    this.todo.forEach(todoList => todoList.forEach(todo =>{
+      console.log("todo : "+todo.idListe);
+      if(todo.idListe ===  id){
+        tmp.push(todo);
+      }
+    }));
 
-  get(): Observable<Array<TodoUser>> {
-    return this.todoUser;
+    return tmp;
   }
 
-  add(todoUser: TodoUser) {
-    return this.todoUserCollection.add(todoUser);
+  add(todo: Todo) {
+    return this.todoCollection.add(todo);
   }
 
-  delete(todoUser: TodoUser){
-    return this.todoUserCollection.doc(todoUser.id).delete();
+  delete(todo: Todo){
+    return this.todoCollection.doc(todo.id).delete();
   }
 
 }

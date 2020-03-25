@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { TodoUser } from '../model/todoUser';
+import { Todo } from '../model/todo';
 import { TodoslistService } from '../services/todoslist.service';
 import { AuthGuardService } from '../services/auth-guard.service';
+import {Router, ActivatedRoute, Params} from '@angular/router';
 
 @Component({
   selector: 'app-addtodo',
@@ -12,16 +12,18 @@ import { AuthGuardService } from '../services/auth-guard.service';
 export class AddtodoPage implements OnInit {
 
   title: string;
+  idListe: string;
 
   constructor(private listService: TodoslistService,
     private guardService: AuthGuardService,
-    private router: Router) { }
+    private router: Router) {
+    this.idListe =  this.router.url.substring(9);}
 
   ngOnInit() {
   }
 
   addList(){
-    let item = { title: this.title, isDone: false, user : this.guardService.userDetails().email} as TodoUser;
+    let item = { title: this.title, isDone: false, idListe:this.idListe} as Todo;
     this.listService.add(item);
     this.router.navigate(['']);
   }
