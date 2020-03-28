@@ -20,7 +20,9 @@ export class AddtodolistPage implements OnInit {
   }
 
   addList(){
-    let item = { title: this.title, admin : this.guardService.userDetails().email} as ListTodo;
+    var userCanRead = new Array<String>();
+    var userCanWrite = new Array<string>();
+    let item = { title: this.title, admin : this.guardService.userDetails().email, userCanRead: userCanRead, userCanWrite: userCanWrite, todos: null} as ListTodo;
     this.listTodolistService.add(item);
     this.router.navigate(['']);
   }

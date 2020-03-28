@@ -4,6 +4,7 @@ import { AuthGuardService } from '../services/auth-guard.service';
 import { ListTodoListService } from '../services/list-todo-list.service';
 import { AuthenticateService } from '../services/authentication.service';
 import { ListTodo } from '../model/ListTodo';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-list-todo-list',
@@ -14,14 +15,38 @@ export class ListTodoListPage implements OnInit {
 
     private listTodos$: Observable<Array<ListTodo>>;
     userEmail: string;
+    canRead: boolean;
+    canWrite: boolean;
 
   constructor(
     private listService: ListTodoListService,
     private guardService: AuthGuardService,
-    private authService: AuthenticateService){}
+    private authService: AuthenticateService){
+      this.userEmail = this.authService.userDetails().email;
+    }
 
   ngOnInit(): void {
     this.listTodos$ = this.listService.get();
+  }
+
+  includesEmailRead(list: ListTodo) : boolean {
+    let bool = false;
+    list.userCanRead.forEach(tmp =>{
+      if(tmp.includes(this.userEmail)){
+        bool = true;
+      }
+    });
+    return bool;
+  }
+
+  includesEmailWrite(list: ListTodo) : boolean {
+    let bool = false;
+    list.userCanWrite.forEach(tmp =>{
+      if(tmp.includes(this.userEmail)){
+        bool = true;
+      }
+    });
+    return bool;
   }
 
   delete(todoList: ListTodo){

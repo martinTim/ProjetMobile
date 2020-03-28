@@ -29,9 +29,7 @@ export class TodoslistService {
 
   get(id: String): Array<Todo> {
     var tmp = new Array<Todo>();
-    console.log("id : "+id);
     this.todo.forEach(todoList => todoList.forEach(todo =>{
-      console.log("todo : "+todo.idListe);
       if(todo.idListe ===  id){
         tmp.push(todo);
       }

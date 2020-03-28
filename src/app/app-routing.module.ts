@@ -32,6 +32,11 @@ const routes: Routes = [
     loadChildren: () => import('./addtodolist/addtodolist.module').then( m => m.AddtodolistPageModule),
     canActivate: [AuthGuardService],
   },
+  {
+    path: 'partage-liste/:id',
+    loadChildren: () => import('./partage-liste/partage-liste.module').then( m => m.PartageListePageModule),
+    canActivate: [AuthGuardService],
+  },
 ];
 
 @NgModule({
