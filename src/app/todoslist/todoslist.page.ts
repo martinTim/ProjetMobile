@@ -37,7 +37,8 @@ export class TodoslistPage implements OnInit {
     this.todos = this.listService.get(this.idTodolist);
     this.todoList = this.listTodoListService.getTodoList(this.idTodolist);
     const subscription1 = this.todoList.subscribe(todolist => this.canRead = todolist.userCanRead.includes(this.userEmail));
-    const subscription2 = this.todoList.subscribe(todolist => this.canWrite = todolist.userCanWrite.includes(this.userEmail));
+    const subscription2 = this.todoList.subscribe(todolist => this.canWrite = todolist.userCanWrite.includes(this.userEmail) || todolist.admin == this.userEmail);
+  
   }
 
   delete(todo: Todo){
