@@ -42,9 +42,8 @@ export class ListTodoListService {
     return tmp;
   }
 
-  public updateTodoList(user: string, id: string, list: ListTodo) {
-    this.db.collection('ListTodo', ref => ref.where('id', '==', id))
-    .snapshotChanges().subscribe(docs => docs.forEach(v => v.payload.doc.ref.update(list)));
+  update(id, value){
+    return this.db.collection('ListTodo').doc(id).set(value);
   }
 
   public getTodoList(listId: string): Observable<ListTodo> {
@@ -60,7 +59,7 @@ export class ListTodoListService {
   }
 
 
-  addPermission(id: string, user: string, readOnly: boolean){    
+  addPermission(id: string, user: string, readOnly: boolean){
     let tmp = this.getTodoList(id);
     const subscription = tmp.subscribe(val => {
        if(readOnly){
@@ -69,8 +68,8 @@ export class ListTodoListService {
         val.userCanWrite.push(user);
        }
        subscription.unsubscribe();
-       this.updateTodoList(user,id,val);
-    });        
+       this.update(id,val);
+    });
   }
 
 

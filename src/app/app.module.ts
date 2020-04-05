@@ -18,6 +18,8 @@ import { HttpClientModule } from '@angular/common/http';
 import * as firebase from 'firebase';
 import {AngularFireModule} from '@angular/fire';
 
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+
 firebase.initializeApp(environment.firebase);
 
 @NgModule({
@@ -36,6 +38,7 @@ firebase.initializeApp(environment.firebase);
     SplashScreen,
     AuthenticateService,
     AuthGuardService,
+    GooglePlus,
     AngularFirestore,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],

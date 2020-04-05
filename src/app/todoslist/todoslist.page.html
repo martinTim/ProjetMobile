@@ -1,14 +1,12 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-title>
-            <ion-col text-center> Welcome {{this.authService.userDetails().email}} !</ion-col>
             <ion-col text-center>
                 <ion-button (click)="logout()">Log out</ion-button>
             </ion-col>
             <ion-col text-center>
                 <ion-button (click)="retourList()">Retourner aux listes</ion-button>
             </ion-col>
-
         </ion-title>
     </ion-toolbar>
 </ion-header>
@@ -16,10 +14,8 @@
 
 <ion-content fullscreen>
     <ion-list>
-        <div *ngIf="todos.admin == userEmail ||
-        canRead ||
-        canWrite">
-            <ion-item-sliding *ngFor="let todo of todos">
+        <ion-item-sliding *ngFor="let todo of todos">
+            <div *ngIf="canRead || canWrite">
                 <ion-item>
                     <ion-label>
                         <h2>{{ todo.title }}</h2>
@@ -27,19 +23,17 @@
                 </ion-item>
 
                 <ion-item-options side="end">
-                    <div *ngIf="todos.admin == userEmail ||
-                    canWrite">
+                    <div *ngIf="canWrite">
                         <ion-item-option color="danger" (click)="delete(todo)">
                             <ion-icon slot="top" name="trash"></ion-icon>
                         </ion-item-option>
                     </div>
                 </ion-item-options>
-            </ion-item-sliding>
-        </div>
+            </div>
+        </ion-item-sliding>
     </ion-list>
     <section>
-        <div *ngIf="todos.admin == userEmail ||
-        canWrite">
+        <div *ngIf="canWrite">
             <ion-button expand="block" [routerDirection]="'root'" [routerLink]="'/addtodo/'+this.idTodolist">Add a New tout doux</ion-button>
             <ion-button expand="block" (click)="partager()">Partager la liste</ion-button>
         </div>

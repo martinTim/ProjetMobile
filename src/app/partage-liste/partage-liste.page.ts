@@ -3,6 +3,7 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 import { AuthGuardService } from '../services/auth-guard.service';
 import { ListTodoListService } from '../services/list-todo-list.service';
 import { ListTodo } from '../model/ListTodo';
+import { AuthenticateService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-partage-liste',
@@ -19,6 +20,7 @@ export class PartageListePage implements OnInit {
 
   constructor(
     private guardService: AuthGuardService,
+    public authService: AuthenticateService,
     private router: Router,
     private listService: ListTodoListService)
   {
@@ -26,15 +28,18 @@ export class PartageListePage implements OnInit {
     this.permission = "readOnly";
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   addPermission(){
     this.listService.addPermission(this.idListe,this.emailUser,this.permission === "readOnly");
     this.router.navigate(['todoslist/'+this.idListe]);
   }
-  
+
   retourList(){
     this.router.navigate(['']);
+  }
+
+  logout(){
+    this.authService.logoutUser();
   }
 }

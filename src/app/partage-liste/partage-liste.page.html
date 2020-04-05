@@ -1,31 +1,35 @@
 <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      <ion-col text-center> <ion-button (click)="logout()">Log out</ion-button> </ion-col>
-      <ion-col text-center> <ion-button (click)="retourList()">Retourner aux listes</ion-button> </ion-col>
+    <ion-toolbar color="primary">
+        <ion-title>
+            <ion-col text-center>
+                <ion-button (click)="logout()">Log out</ion-button>
+            </ion-col>
+            <ion-col text-center>
+                <ion-button (click)="retourList()">Retourner aux listes</ion-button>
+            </ion-col>
 
-    </ion-title>
-  </ion-toolbar>
+        </ion-title>
+    </ion-toolbar>
 </ion-header>
 
 <ion-content>
-  <form (ngSubmit)="addPermission()" #addListForm="ngForm">
-  <h2>Partager la liste avec : </h2>
-  <ion-input required id="emailUser" type="text" name="emailUser" [(ngModel)]="emailUser" #ctrlTitle="ngModel">
-  </ion-input>
-  <ion-text [hidden]="ctrlTitle.valid || ctrlTitle.pristine || name" color="danger">Email requise</ion-text>
-    <h3>Avec les droits : </h3>
-    <div>
-    <input type="radio" id="readOnly" name="permission" value="readOnly" checked [(ngModel)]="permission" #ctrlTitle="ngModel" >
-    <label for="readOnly">Read only</label>
-    </div>
+    <form (ngSubmit)="addPermission()" #addListForm="ngForm">
+        <h2>Partager la liste avec : </h2>
+        <ion-input required id="emailUser" type="text" name="emailUser" [(ngModel)]="emailUser" #ctrlTitle="ngModel">
+        </ion-input>
+        <ion-text [hidden]="ctrlTitle.valid || ctrlTitle.pristine || emailUser" color="danger">Email requise</ion-text>
+        <h3>Avec les droits : </h3>
+        <div>
+            <input type="radio" id="readOnly" name="permission" value="readOnly" checked [(ngModel)]="permission" #ctrlTitle="ngModel">
+            <label for="readOnly">Read only</label>
+        </div>
 
-    <div>
-      <input type="radio" id="readAndWrite" name="permission" value="readAndWrite" [(ngModel)]="permission" #ctrlTitle="ngModel">
-      <label for="readAndWrite">Read and Write</label>
-    </div>
-    <ion-button expand="block" type="submit" class="ion-no-margin" [disabled]="!addListForm.valid">
-    Partager la liste</ion-button>
+        <div>
+            <input type="radio" id="readAndWrite" name="permission" value="readAndWrite" [(ngModel)]="permission" #ctrlTitle="ngModel">
+            <label for="readAndWrite">Read and Write</label>
+        </div>
+        <ion-button expand="block" type="submit" class="ion-no-margin" [disabled]="!addListForm.valid">
+            Partager la liste</ion-button>
     </form>
 
 </ion-content>

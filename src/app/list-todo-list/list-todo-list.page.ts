@@ -13,15 +13,15 @@ import { ThrowStmt } from '@angular/compiler';
 })
 export class ListTodoListPage implements OnInit {
 
-    private listTodos$: Observable<Array<ListTodo>>;
+    public listTodos$: Observable<Array<ListTodo>>;
     userEmail: string;
     canRead: boolean;
     canWrite: boolean;
 
   constructor(
-    private listService: ListTodoListService,
-    private guardService: AuthGuardService,
-    private authService: AuthenticateService){
+    public listService: ListTodoListService,
+    public guardService: AuthGuardService,
+    public authService: AuthenticateService){
       this.userEmail = this.authService.userDetails().email;
     }
 

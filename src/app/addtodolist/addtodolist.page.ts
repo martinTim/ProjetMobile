@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ListTodoListService } from '../services/list-todo-list.service';
 import { AuthGuardService } from '../services/auth-guard.service';
 import { ListTodo } from '../model/ListTodo';
+import { AuthenticateService } from '../services/authentication.service';
 
 
 @Component({
@@ -12,9 +13,11 @@ import { ListTodo } from '../model/ListTodo';
 })
 export class AddtodolistPage implements OnInit {
   title: string;
-  constructor(private listTodolistService: ListTodoListService,
+  constructor(
+    private listTodolistService: ListTodoListService,
     private guardService: AuthGuardService,
-    private router: Router) { }
+    private router: Router,
+    public authService: AuthenticateService) { }
 
   ngOnInit() {
   }
@@ -27,4 +30,11 @@ export class AddtodolistPage implements OnInit {
     this.router.navigate(['']);
   }
 
+  retourList(){
+    this.router.navigate(['']);
+  }
+
+  logout(){
+    this.authService.logoutUser();
+  }
 }

@@ -3,6 +3,13 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { NavController } from '@ionic/angular';
 import { AuthenticateService } from '../services/authentication.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { GooglePlus } from '@ionic-native/google-plus/ngx';
+import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+import { AngularFireAuth } from '@angular/fire/auth';
+import * as firebase from 'firebase';
+import { Platform } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-login',
@@ -13,17 +20,22 @@ export class LoginPage implements OnInit {
 
   validations_form: FormGroup;
   errorMessage: string = '';
+  userData: any = {};
 
   constructor(
 
     private navCtrl: NavController,
     private authService: AuthenticateService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private platform: Platform,
+    private google:GooglePlus,
+    public loadingController: LoadingController,
+    private fireAuth: AngularFireAuth
 
   ) { }
 
   ngOnInit() {
-
     this.validations_form = this.formBuilder.group({
       email: new FormControl('', Validators.compose([
         Validators.required,
@@ -64,4 +76,9 @@ export class LoginPage implements OnInit {
     this.navCtrl.navigateForward('/signin');
   }
 
+
+  googleSignIn() {
+    this.authService.googleSignIn();
+
+  }
 }

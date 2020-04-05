@@ -15,20 +15,20 @@ import {Router, ActivatedRoute, Params} from '@angular/router';
 })
 export class TodoslistPage implements OnInit {
 
-  private todos: Array<Todo>;
+  public todos: Array<Todo>;
   userEmail: string;
-  private idTodolist: string;
+  public idTodolist: string;
   todoList: Observable<ListTodo>;
   canRead: boolean;
   canWrite: boolean;
   constructor(
 
-    private router: Router,
-    private listTodoListService: ListTodoListService,
-    private listService: TodoslistService,
-    private guardService: AuthGuardService,
-    private authService: AuthenticateService,
-    private activatedRoute: ActivatedRoute) {
+    public router: Router,
+    public listTodoListService: ListTodoListService,
+    public listService: TodoslistService,
+    public guardService: AuthGuardService,
+    public authService: AuthenticateService,
+    public activatedRoute: ActivatedRoute) {
       this.userEmail = this.authService.userDetails().email;
       this.idTodolist = this.router.url.substring(11);
     }
